@@ -25,7 +25,7 @@ def reg_user():
             db.session.commit()
             return Response.success_json()
         except (SQLAlchemyError, DBAPIError) as e:
-            return Response.error_json(e, ErrorCodes.insertError)
+            return Response.error_json(e, ErrorCodes.internalError)
     else:
         return Response('User already exists', False, ErrorCodes.userAlreadyExists)
 
@@ -47,4 +47,4 @@ def login_user():
             return Response(auth_token.decode(), True, 0).to_json()
     except Exception as e:
         print(e)
-        return Response.error_json(e, ErrorCodes.readError)
+        return Response.error_json(e, ErrorCodes.internalError)
