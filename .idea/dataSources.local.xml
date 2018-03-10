@@ -10,5 +10,14 @@
       <user-name>postgres</user-name>
       <introspection-schemas>soulcloud:public</introspection-schemas>
     </data-source>
+    <data-source name="heroku@localhost" uuid="a68ac714-abd9-4a3e-bf9c-d3e972f07df0">
+      <database-info product="PostgreSQL" version="10.3 (Ubuntu 10.3-1.pgdg14.04+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.1">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>fruyfjgqkbraaq</user-name>
+      <introspection-schemas>ddduintd5jnpep:public</introspection-schemas>
+    </data-source>
   </component>
 </project>

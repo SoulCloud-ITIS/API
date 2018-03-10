@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/soulcloud</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="heroku@localhost" uuid="a68ac714-abd9-4a3e-bf9c-d3e972f07df0">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-50-16-217-122.compute-1.amazonaws.com:5432/ddduintd5jnpep?sslmode=require</jdbc-url>
+    </data-source>
   </component>
 </project>
