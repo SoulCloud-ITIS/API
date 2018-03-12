@@ -1,8 +1,9 @@
 from flask import request
 from app import app, db
-from app.models import Book, Response
-from sqlalchemy.exc import SQLAlchemyError, DBAPIError
+from app.models import Book, Response, User, UsersAndBooks
+from sqlalchemy.exc import SQLAlchemyError, DBAPIError, IntegrityError
 from app.error_codes import ErrorCodes
+from jwt import ExpiredSignatureError, InvalidTokenError
 
 book_already_exists_message = "Book with same name and author already exists"
 
@@ -32,3 +33,22 @@ def add_book():
             return Response(book_already_exists_message, False, ErrorCodes.bookAlreadyExists).to_json()
     except (SQLAlchemyError, DBAPIError) as e:
         return Response.error_json(e)
+
+
+@app.route("/books/<book_id>/<token>", methods=['POST'])
+def add_user_book(book_id, token):
+    try:
+        user_id = User.decode_auth_token(token)
+
+        users_and_books = UsersAndBooks(user_id, book_id)
+        db.session.add(users_and_books)
+        db.session.commit()
+        return Response.success_json()
+    except IntegrityError:
+        return Response("Book already exists or not found.", False, ErrorCodes.bookAlreadyExists).to_json()
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()

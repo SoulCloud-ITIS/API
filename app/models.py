@@ -4,6 +4,7 @@ import datetime
 from app import app
 from app import db, ma
 from sqlalchemy.orm import relationship, backref
+from app.error_codes import ErrorCodes
 
 
 class User(db.Model):
@@ -42,9 +43,9 @@ class User(db.Model):
             payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
             return payload['sub']
         except jwt.ExpiredSignatureError:
-            return 'Signature expired. Please log in again.'
+            raise
         except jwt.InvalidTokenError:
-            return 'Invalid token. Please log in again.'
+            raise
 
 
 class Book(db.Model):
@@ -86,6 +87,11 @@ class UsersAndBooks(db.Model):
     user = relationship(User, backref=backref("users_and_books", cascade="all, delete-orphan"))
     book = relationship(Book, backref=backref("users_and_books", cascade="all, delete-orphan"))
 
+    def __init__(self, user_id, book_id, mark=False):
+        self.user_id = user_id
+        self.book_id = book_id
+        self.mark = mark
+
 
 class UserSchema(ma.Schema):
     class Meta:
@@ -114,6 +120,14 @@ class Response:
     def error_json(error, error_code=500):
         response = Response(error.__str__, False, error_code)
         return Response.schema.jsonify(response)
+
+    @staticmethod
+    def expired_token_json():
+        return Response("Token expired. Please log in again.", False, ErrorCodes.tokenExpired).to_json()
+
+    @staticmethod
+    def invalid_token_json():
+        return Response("Invalid token. Please log in again.", False, ErrorCodes.invalidToken).to_json()
 
     def to_json(self):
         return self.schema.jsonify(self)
