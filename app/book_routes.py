@@ -4,6 +4,7 @@ from app.models import Book, Response, User, UsersAndBooks
 from sqlalchemy.exc import SQLAlchemyError, DBAPIError, IntegrityError
 from app.error_codes import ErrorCodes
 from jwt import ExpiredSignatureError, InvalidTokenError
+from app.helpers import BookWithMarks
 
 book_already_exists_message = "Book with same name and author already exists"
 
@@ -46,6 +47,24 @@ def add_user_book(book_id, token):
         return Response.success_json()
     except IntegrityError:
         return Response("Book already exists or not found.", False, ErrorCodes.bookAlreadyExists).to_json()
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
+@app.route("/books/<token>", methods=['GET'])
+def get_user_books(token):
+    try:
+        user_id = User.decode_auth_token(token)
+        user = User.query.get(user_id)
+        user_and_book_list = user.users_and_books
+
+        books = [BookWithMarks(book.book, book.mark) for book in user_and_book_list]
+
+        return BookWithMarks.schema.jsonify(books, True)
     except SQLAlchemyError as e:
         return Response.error_json(e)
     except ExpiredSignatureError:

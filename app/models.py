@@ -1,10 +1,12 @@
 import jwt
 import datetime
+import simplejson
 
 from app import app
 from app import db, ma
 from sqlalchemy.orm import relationship, backref
 from app.error_codes import ErrorCodes
+from marshmallow import fields
 
 
 class User(db.Model):
@@ -48,7 +50,17 @@ class User(db.Model):
             raise
 
 
+class BookSchema(ma.Schema):
+    class Meta:
+        json_module = simplejson
+        fields = ('id', 'name', 'author', 'description', 'text_url', 'coef_love', 'coef_fantastic', 'coef_fantasy',
+                  'coef_detective', 'coef_adventure', 'coef_art')
+
+
 class Book(db.Model):
+    schema = BookSchema()
+    schema_many = BookSchema(many=True)
+
     __tablename__ = "books"
     id = db.Column('book_id', db.Integer, primary_key=True)
     name = db.Column('book_name', db.String(120))
@@ -78,7 +90,14 @@ class Book(db.Model):
         self.coef_art = coef_art
 
 
+class UserAndBooksSchema(ma.Schema):
+    book = fields.Nested(Book.schema)
+    mark = fields.Boolean()
+
+
 class UsersAndBooks(db.Model):
+    schema = UserAndBooksSchema()
+
     __tablename__ = 'users_and_books'
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), primary_key=True)
