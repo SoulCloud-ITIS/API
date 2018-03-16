@@ -16,6 +16,7 @@ class User(db.Model):
     password = db.Column('user_password', db.String(128))
 
     books = relationship("Book", secondary="users_and_books")
+    genres = relationship("Genre", secondary="users_and_genres")
 
     def __init__(self, email, password):
         self.email = email
@@ -150,3 +151,32 @@ class Response:
 
     def to_json(self):
         return self.schema.jsonify(self)
+
+
+class GenreSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'name')
+
+
+class Genre(db.Model):
+    schema = GenreSchema()
+
+    __tablename__ = "genres"
+
+    id = db.Column("genre_id", db.Integer, primary_key=True)
+    name = db.Column("genre_name", db.String(120))
+
+    users = relationship("User", secondary="users_and_genres")
+
+    def __init__(self, name):
+        self.name = name
+
+
+class UsersAndGenres(db.Model):
+    __tablename__ = "users_and_genres"
+
+    user_id = db.Column("user_id", db.Integer, primary_key=True)
+    genre_id = db.Column("genre_id", db.Integer, primary_key=True)
+
+    user = relationship(User, backref=backref("users", cascade="all, delete-orphan"))
+    genre = relationship(Genre, backref=backref("genres", cascade="all, delete-orphan"))
