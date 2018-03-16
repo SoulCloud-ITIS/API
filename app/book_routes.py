@@ -7,6 +7,7 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from app.helpers import BookWithMarks
 
 book_already_exists_message = "Book with same name and author already exists"
+BOOKS_PER_PAGE = 20
 
 
 @app.route("/books", methods=['POST'])
@@ -34,6 +35,13 @@ def add_book():
             return Response(book_already_exists_message, False, ErrorCodes.bookAlreadyExists).to_json()
     except (SQLAlchemyError, DBAPIError) as e:
         return Response.error_json(e)
+
+
+@app.route("/books", methods=["GET"])
+@app.route("/books/<int:page>", methods=["GET"])
+def get_books(page=1):
+    books = Book.query.paginate(page, BOOKS_PER_PAGE, False).items
+    return Book.schema.jsonify(books, True)
 
 
 @app.route("/books/<book_id>/<token>", methods=['POST'])
