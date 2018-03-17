@@ -174,8 +174,8 @@ class Genre(db.Model):
 class UsersAndGenres(db.Model):
     __tablename__ = "users_and_genres"
 
-    user_id = db.Column("user_id", db.Integer, primary_key=True)
-    genre_id = db.Column("genre_id", db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genres.genre_id'), primary_key=True)
 
     user = relationship(User, backref=backref("users", cascade="all, delete-orphan"))
     genre = relationship(Genre, backref=backref("genres", cascade="all, delete-orphan"))
