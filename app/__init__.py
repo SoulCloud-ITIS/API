@@ -26,4 +26,4 @@ if __name__ == '__main__':
     app.run()
 
 from app import models, error_handlers
-from app.routes import book_routes, user_routes
+from app.routes import book_routes, user_routes, genre_routes
