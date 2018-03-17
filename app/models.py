@@ -162,7 +162,6 @@ class Genre(db.Model):
     schema = GenreSchema()
 
     __tablename__ = "genres"
-
     id = db.Column("genre_id", db.Integer, primary_key=True)
     name = db.Column("genre_name", db.String(120))
 

@@ -25,4 +25,5 @@ if __name__ == '__main__':
     app.debug = True
     app.run()
 
-from app import models, user_routes, book_routes, error_handlers
+from app import models, error_handlers
+from app.routes import book_routes, user_routes
