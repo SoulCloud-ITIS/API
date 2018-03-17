@@ -179,3 +179,7 @@ class UsersAndGenres(db.Model):
 
     user = relationship(User, backref=backref("users", cascade="all, delete-orphan"))
     genre = relationship(Genre, backref=backref("genres", cascade="all, delete-orphan"))
+
+    def __init__(self, user_id, genre_id):
+        self.user_id = user_id
+        self.genre_id = genre_id

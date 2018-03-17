@@ -1,5 +1,9 @@
 from app import app, db
-from app.models import Genre
+from app.models import Genre, User, UsersAndGenres, Response
+from flask import request
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
+from jwt import ExpiredSignatureError, InvalidTokenError
+from app.error_codes import ErrorCodes
 
 
 @app.route("/genres", methods=['GET'])
@@ -7,3 +11,22 @@ def get_all_genres():
     genres = Genre.query.all()
     return Genre.schema.jsonify(genres, True)
 
+
+@app.route("/genres/<token>", methods=['POST'])
+def set_user_genres(token):
+    genre_id = request.form['id']
+
+    try:
+        user_id = User.decode_auth_token(token)
+        user_and_genre = UsersAndGenres(user_id, genre_id)
+        db.session.add(user_and_genre)
+        db.session.commit()
+        return Response.success_json()
+    except IntegrityError:
+        return Response("Genre already exists", False, ErrorCodes.genreAlreadyExists).to_json()
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()

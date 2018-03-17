@@ -5,4 +5,5 @@ class ErrorCodes:
     tokenExpired = 5
     invalidToken = 6
     bookAlreadyAdded = 7
+    genreAlreadyExists = 8
     internalError = 500
