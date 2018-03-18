@@ -99,3 +99,28 @@ def get_user_books(token):
         return Response.expired_token_json()
     except InvalidTokenError:
         return Response.invalid_token_json()
+
+
+@app.route("/books/genres/recommend/<int:page>/<token>", methods=['GET'])
+@app.route("/books/genres/recommend/<token>", methods=['GET'])
+def get_genre_recommend_books(token, page=1):
+    try:
+        user_id = User.decode_auth_token(token)
+        user = User.query.get(user_id)
+        user_genres = user.genres
+
+        genres_id = [genre.id for genre in user_genres]
+
+        coefficients = Coefficient\
+            .query\
+            .filter(Coefficient.genre_id.in_(genres_id), Coefficient.value > 0.75)\
+            .distinct(Coefficient.book_id).paginate(page, BOOKS_PER_PAGE, False).items
+        books = [coefficient.book for coefficient in coefficients]
+
+        return Book.schema.jsonify(books, True)
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
