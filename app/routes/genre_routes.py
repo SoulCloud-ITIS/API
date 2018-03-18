@@ -12,10 +12,8 @@ def get_all_genres():
     return Genre.schema.jsonify(genres, True)
 
 
-@app.route("/genres/<token>", methods=['POST'])
-def set_user_genres(token):
-    genre_id = request.form['id']
-
+@app.route("/genres/<genre_id>/<token>", methods=['POST'])
+def set_user_genres(token, genre_id):
     try:
         user_id = User.decode_auth_token(token)
         user_and_genre = UsersAndGenres(user_id, genre_id)
