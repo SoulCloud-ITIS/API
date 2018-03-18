@@ -54,8 +54,7 @@ class User(db.Model):
 class BookSchema(ma.Schema):
     class Meta:
         json_module = simplejson
-        fields = ('id', 'name', 'author', 'description', 'text_url', 'coef_love', 'coef_fantastic', 'coef_fantasy',
-                  'coef_detective', 'coef_adventure', 'coef_art')
+        fields = ('id', 'name', 'author', 'description')
 
 
 class Book(db.Model):
@@ -67,28 +66,14 @@ class Book(db.Model):
     name = db.Column('book_name', db.String(120))
     author = db.Column('book_author', db.String(120))
     description = db.Column('book_description', db.Text())
-    text_url = db.Column('book_text_url', db.String(120))
-    coef_love = db.Column('book_coef_love', db.Numeric())
-    coef_fantastic = db.Column('book_coef_fantastic', db.Numeric())
-    coef_fantasy = db.Column('book_coef_fantasy', db.Numeric())
-    coef_detective = db.Column('book_coef_detective', db.Numeric())
-    coef_adventure = db.Column('book_coef_adventure', db.Numeric())
-    coef_art = db.Column('book_coef_art', db.Numeric())
 
+    genres = relationship("Genre", secondary="coefficients")
     users = relationship("User", secondary="users_and_books")
 
-    def __init__(self, name, author, description, text_url, coef_love, coef_fantastic, coef_fantasy, coef_detective,
-                 coef_adventure, coef_art):
+    def __init__(self, name, author, description):
         self.name = name
         self.author = author
         self.description = description
-        self.text_url = text_url
-        self.coef_love = coef_love
-        self.coef_fantastic = coef_fantastic
-        self.coef_fantasy = coef_fantasy
-        self.coef_detective = coef_detective
-        self.coef_adventure = coef_adventure
-        self.coef_art = coef_art
 
 
 class UserAndBooksSchema(ma.Schema):
@@ -166,6 +151,7 @@ class Genre(db.Model):
     name = db.Column("genre_name", db.String(120))
 
     users = relationship("User", secondary="users_and_genres")
+    books = relationship("Book", secondary="coefficients")
 
     def __init__(self, name):
         self.name = name
@@ -183,3 +169,18 @@ class UsersAndGenres(db.Model):
     def __init__(self, user_id, genre_id):
         self.user_id = user_id
         self.genre_id = genre_id
+
+
+class Coefficient(db.Model):
+    __tablename__ = "coefficients"
+    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), primary_key=True)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genres.genre_id'), primary_key=True)
+    value = db.Column("value", db.Numeric)
+
+    book = relationship(Book, backref=backref("books", cascade="all, delete-orphan"))
+    genre = relationship(Genre, backref=backref("genres_books", cascade="all, delete-orphan"))
+
+    def __init__(self, book_id, genre_id, value):
+        self.book_id = book_id
+        self.genre_id = genre_id
+        self.value = value

@@ -1,13 +1,20 @@
 from flask import request
 from app import app, db
-from app.models import Book, Response, User, UsersAndBooks
+from app.models import Book, Response, User, UsersAndBooks, Coefficient
 from sqlalchemy.exc import SQLAlchemyError, DBAPIError, IntegrityError
 from app.error_codes import ErrorCodes
 from jwt import ExpiredSignatureError, InvalidTokenError
 from app.helpers import BookWithMarks
 
 book_already_exists_message = "Book with same name and author already exists"
+
 BOOKS_PER_PAGE = 20
+LOVE_ID = 1
+FANTASTIC_ID = 2
+FANTASY_ID = 3
+DETECTIVE_ID = 4
+ADVENTURE_ID = 5
+ART_ID = 6
 
 
 @app.route("/books", methods=['POST'])
@@ -15,7 +22,6 @@ def add_book():
     name = request.form['name']
     author = request.form['author']
     description = request.form['description']
-    text_url = request.form['text_url']
     coef_love = request.form['coef_love']
     coef_fantastic = request.form['coef_fantastic']
     coef_fantasy = request.form['coef_fantasy']
@@ -26,9 +32,23 @@ def add_book():
     try:
         book = Book.query.filter_by(name=name).first()
         if book is None or not book.author == author:
-            new_book = Book(name, author, description, text_url, coef_love, coef_fantastic, coef_fantasy,
-                            coef_detective, coef_adventure, coef_art)
+            new_book = Book(name, author, description)
             db.session.add(new_book)
+            db.session.flush()
+
+            love = Coefficient(new_book.id, LOVE_ID, coef_love)
+            fantastic = Coefficient(new_book.id, FANTASTIC_ID, coef_fantastic)
+            fantasy = Coefficient(new_book.id, FANTASY_ID, coef_fantasy)
+            detective = Coefficient(new_book.id, DETECTIVE_ID, coef_detective)
+            adventure = Coefficient(new_book.id, ADVENTURE_ID, coef_adventure)
+            art = Coefficient(new_book.id, ART_ID, coef_art)
+
+            db.session.add(love)
+            db.session.add(fantastic)
+            db.session.add(fantasy)
+            db.session.add(detective)
+            db.session.add(adventure)
+            db.session.add(art)
             db.session.commit()
             return Response.success_json()
         else:
