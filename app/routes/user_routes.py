@@ -23,11 +23,16 @@ def reg_user():
         try:
             db.session.add(new_user)
             db.session.commit()
-            return Response.success_json()
+
+            auth_token = new_user.encode_auth_token()
+            if auth_token:
+                return Response(auth_token, True, 0).to_json()
+
+            return Response("Error generating token", False, ErrorCodes.generateTokenError).to_json()
         except (SQLAlchemyError, DBAPIError) as e:
             return Response.error_json(e, ErrorCodes.internalError)
     else:
-        return Response('User already exists', False, ErrorCodes.userAlreadyExists)
+        return Response('User already exists', False, ErrorCodes.userAlreadyExists).to_json()
 
 
 @app.route("/login", methods=["POST"])

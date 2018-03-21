@@ -6,4 +6,5 @@ class ErrorCodes:
     invalidToken = 6
     bookAlreadyAdded = 7
     genreAlreadyExists = 8
+    generateTokenError = 9
     internalError = 500
