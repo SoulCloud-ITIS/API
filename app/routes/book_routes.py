@@ -1,4 +1,6 @@
-from flask import request
+import json
+
+from flask import request, jsonify
 from app import app, db
 from app.models import Book, Response, User, UsersAndBooks, Coefficient
 from sqlalchemy.exc import SQLAlchemyError, DBAPIError, IntegrityError
@@ -66,7 +68,7 @@ def get_books(page=1):
     return Book.schema.jsonify(books, True)
 
 
-@app.route("/books/<book_id>/<token>", methods=['POST'])
+@app.route("/books/<int:book_id>/<token>", methods=['POST'])
 def add_user_book(book_id, token):
     try:
         user_id = User.decode_auth_token(token)
@@ -95,6 +97,66 @@ def get_user_books(token):
         books = [BookWithMarks(book.book, book.mark) for book in user_and_book_list]
 
         return BookWithMarks.schema.jsonify(books, True)
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
+@app.route("/books/<int:book_id>/like/<token>", methods=['PUT'])
+def set_like_book(book_id, token):
+    try:
+        user_id = User.decode_auth_token(token)
+        set_mark_book(book_id, user_id, True)
+        return Response.success_json()
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
+@app.route("/books/<int:book_id>/dislike/<token>", methods=['PUT'])
+def set_dislike_book(book_id, token):
+    try:
+        user_id = User.decode_auth_token(token)
+        set_mark_book(book_id, user_id, False)
+        return Response.success_json()
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
+@app.route("/books/<int:book_id>/unlike/<token>", methods=['PUT'])
+def set_mark_null_book(book_id, token):
+    try:
+        user_id = User.decode_auth_token(token)
+        set_mark_book(book_id, user_id, None)
+        return Response.success_json()
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
+@app.route("/books/<int:book_id>/mark/<token>", methods=['GET'])
+def get_like_status_book(book_id, token):
+    try:
+        user_id = User.decode_auth_token(token)
+        user_and_book = UsersAndBooks \
+            .query \
+            .filter(UsersAndBooks.user_id == user_id, UsersAndBooks.book_id == book_id) \
+            .first()
+        data = {'mark': user_and_book.mark, 'bookID': book_id}
+        return jsonify(data)
     except SQLAlchemyError as e:
         return Response.error_json(e)
     except ExpiredSignatureError:
@@ -182,3 +244,12 @@ def get_recommend_books(mark, user_id, user_books_id):
             result_books.append(book)
 
     return result_books
+
+
+def set_mark_book(book_id, user_id, mark):
+    user_and_book = UsersAndBooks \
+        .query \
+        .filter(UsersAndBooks.user_id == user_id, UsersAndBooks.book_id == book_id) \
+        .first()
+    user_and_book.mark = mark
+    db.session.commit()
