@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="896ebeaf-0fef-4e12-a96a-afad2b4b3588" name="Default" comment="like, dislike, unlike">
+    <list default="true" id="896ebeaf-0fef-4e12-a96a-afad2b4b3588" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/routes/book_routes.py" afterPath="$PROJECT_DIR$/app/routes/book_routes.py" />
+      <change beforePath="$PROJECT_DIR$/app/error_handlers.py" afterPath="$PROJECT_DIR$/app/error_handlers.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -82,24 +82,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="book_routes.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
+      <file leaf-file-name="error_handlers.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/error_handlers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="135" column="39" lean-forward="false" selection-start-line="135" selection-start-column="39" selection-end-line="135" selection-end-column="39" />
+            <state relative-caret-position="391">
+              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="genre_routes.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/routes/genre_routes.py">
+      <file leaf-file-name="book_routes.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="323">
+              <caret line="153" column="39" lean-forward="true" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -192,7 +194,6 @@
         <option value="$PROJECT_DIR$/app/user_routes.py" />
         <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/app/book_routes.py" />
-        <option value="$PROJECT_DIR$/app/error_handlers.py" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/a68ac714-abd9-4a3e-bf9c-d3e972f07df0/console.sql" />
         <option value="$PROJECT_DIR$/app/routes/genre_routes.py" />
@@ -201,6 +202,7 @@
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/helpers.py" />
         <option value="$PROJECT_DIR$/app/routes/book_routes.py" />
+        <option value="$PROJECT_DIR$/app/error_handlers.py" />
       </list>
     </option>
   </component>
@@ -542,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521646998806</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="like, dislike, unlike and get mark methods">
+      <created>1521654074174</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1521654074174</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -560,14 +569,14 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33783785" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33783785" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32837838" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3310811" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39054054" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21722364" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19794345" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19794345" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -610,7 +619,8 @@
     <MESSAGE value="return user token after registration" />
     <MESSAGE value="add ulr of book" />
     <MESSAGE value="add url field to books" />
-    <option name="LAST_COMMIT_MESSAGE" value="add url field to books" />
+    <MESSAGE value="like, dislike, unlike and get mark methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="like, dislike, unlike and get mark methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -893,13 +903,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/error_handlers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://table:/3cf59559/a68ac714-abd9-4a3e-bf9c-d3e972f07df0/ddduintd5jnpep.public.genres">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -983,6 +986,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="153" column="39" lean-forward="true" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="das://table:/3cf59559/a68ac714-abd9-4a3e-bf9c-d3e972f07df0/ddduintd5jnpep.public.users_and_books">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -990,12 +1003,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
+    <entry file="file://$PROJECT_DIR$/app/error_handlers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="135" column="39" lean-forward="false" selection-start-line="135" selection-start-column="39" selection-end-line="135" selection-end-column="39" />
+        <state relative-caret-position="391">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>

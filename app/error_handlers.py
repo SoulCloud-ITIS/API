@@ -15,3 +15,9 @@ def bad_request(e):
 @app.errorhandler(500)
 def internal_error(e):
     return Response("Houston, we have a problem. Please contact with API developers.", False, 500).to_json(), 500
+
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return Response("Method not allowed. Check for correct request type (GET, POST, PUT, DELETE)", False, 405)\
+               .to_json(), 405
