@@ -5,6 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError, DBAPIError, IntegrityError
 from app.error_codes import ErrorCodes
 from jwt import ExpiredSignatureError, InvalidTokenError
 from app.helpers import BookWithMarks
+from sqlalchemy.sql import func
 
 book_already_exists_message = "Book with same name and author already exists"
 
@@ -111,9 +112,9 @@ def get_genre_recommend_books(token, page=1):
 
         genres_id = [genre.id for genre in user_genres]
 
-        coefficients = Coefficient\
-            .query\
-            .filter(Coefficient.genre_id.in_(genres_id), Coefficient.value > 0.75)\
+        coefficients = Coefficient \
+            .query \
+            .filter(Coefficient.genre_id.in_(genres_id), Coefficient.value > 0.75) \
             .distinct(Coefficient.book_id).paginate(page, BOOKS_PER_PAGE, False).items
         books = [coefficient.book for coefficient in coefficients]
 
@@ -124,3 +125,59 @@ def get_genre_recommend_books(token, page=1):
         return Response.expired_token_json()
     except InvalidTokenError:
         return Response.invalid_token_json()
+
+
+@app.route("/books/recommend/<token>", methods=['GET'])
+def get_user_recommend_books(token):
+    try:
+        user_id = User.decode_auth_token(token)
+        user = User.query.get(user_id)
+        user_books_id = [book.id for book in user.books]
+
+        recommend_like_books = get_recommend_books(True, user_id, user_books_id)
+        recommend_dislike_books = get_recommend_books(False, user_id, user_books_id)
+
+        recommend_books = [book for book in recommend_like_books if book not in recommend_dislike_books]
+
+        return Book.schema.jsonify(recommend_books, True)
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
+def get_recommend_books(mark, user_id, user_books_id):
+    difference = 0.2
+    average_pos = 1
+
+    averages = db \
+        .session \
+        .query(Coefficient.genre_id, func.avg(Coefficient.value)) \
+        .join(UsersAndBooks, Coefficient.book_id == UsersAndBooks.book_id) \
+        .filter(UsersAndBooks.user_id == user_id, UsersAndBooks.mark == mark) \
+        .group_by(Coefficient.genre_id) \
+        .all()
+
+    if len(averages) == 0:
+        return []
+
+    result_books = []
+
+    books = Book.query.filter(~Book.id.in_(user_books_id))
+    for book in books:
+        coefficients = Coefficient.query.filter(Coefficient.book_id == book.id)
+        accept = True
+        i = 0
+        for coefficient in coefficients:
+            value = float(coefficient.value)
+            if value - difference <= averages[i][average_pos] <= value + difference:
+                i += 1
+            else:
+                accept = False
+                break
+        if accept:
+            result_books.append(book)
+
+    return result_books
