@@ -23,7 +23,7 @@ def add_book():
     name = request.form['name']
     author = request.form['author']
     description = request.form['description']
-    url = request.form['url']
+    url = request.form.get('url')
     coef_love = request.form['coef_love']
     coef_fantastic = request.form['coef_fantastic']
     coef_fantasy = request.form['coef_fantasy']

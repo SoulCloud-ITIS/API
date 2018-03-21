@@ -54,7 +54,7 @@ class User(db.Model):
 class BookSchema(ma.Schema):
     class Meta:
         json_module = simplejson
-        fields = ('id', 'name', 'author', 'description')
+        fields = ('id', 'name', 'author', 'description', 'url')
 
 
 class Book(db.Model):
@@ -66,7 +66,7 @@ class Book(db.Model):
     name = db.Column('book_name', db.String(120))
     author = db.Column('book_author', db.String(120))
     description = db.Column('book_description', db.Text())
-    url = db.Column("book_url", db.String(120))
+    url = db.Column("book_url", db.Text())
 
     genres = relationship("Genre", secondary="coefficients")
     users = relationship("User", secondary="users_and_books")
