@@ -1,5 +1,3 @@
-import json
-
 from flask import request, jsonify
 from app import app, db
 from app.models import Book, Response, User, UsersAndBooks, Coefficient
@@ -8,6 +6,7 @@ from app.error_codes import ErrorCodes
 from jwt import ExpiredSignatureError, InvalidTokenError
 from app.helpers import BookWithMarks
 from sqlalchemy.sql import func
+from sqlalchemy import or_
 
 book_already_exists_message = "Book with same name and author already exists"
 
@@ -209,6 +208,15 @@ def get_user_recommend_books(token):
         return Response.expired_token_json()
     except InvalidTokenError:
         return Response.invalid_token_json()
+
+
+@app.route("/books/search/<int:page>/<keyword>", methods=['GET'])
+@app.route("/books/search/<keyword>", methods=['GET'])
+def search_books(keyword, page=1):
+    search_keyword = '%{}%'.format(keyword)
+    books = Book.query.filter(or_(Book.name.ilike(search_keyword), Book.author.ilike(search_keyword)))\
+        .paginate(page, BOOKS_PER_PAGE, False).items
+    return Book.schema.jsonify(books, True)
 
 
 def get_recommend_books(mark, user_id, user_books_id):
