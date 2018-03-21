@@ -23,6 +23,7 @@ def add_book():
     name = request.form['name']
     author = request.form['author']
     description = request.form['description']
+    url = request.form['url']
     coef_love = request.form['coef_love']
     coef_fantastic = request.form['coef_fantastic']
     coef_fantasy = request.form['coef_fantasy']
@@ -33,7 +34,7 @@ def add_book():
     try:
         book = Book.query.filter_by(name=name).first()
         if book is None or not book.author == author:
-            new_book = Book(name, author, description)
+            new_book = Book(name, author, description, url)
             db.session.add(new_book)
             db.session.flush()
 

@@ -66,14 +66,16 @@ class Book(db.Model):
     name = db.Column('book_name', db.String(120))
     author = db.Column('book_author', db.String(120))
     description = db.Column('book_description', db.Text())
+    url = db.Column("book_url", db.String(120))
 
     genres = relationship("Genre", secondary="coefficients")
     users = relationship("User", secondary="users_and_books")
 
-    def __init__(self, name, author, description):
+    def __init__(self, name, author, description, url):
         self.name = name
         self.author = author
         self.description = description
+        self.url = url
 
 
 class UserAndBooksSchema(ma.Schema):
