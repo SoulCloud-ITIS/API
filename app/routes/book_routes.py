@@ -127,7 +127,7 @@ def get_genre_recommend_books(token, page=1):
         return Response.invalid_token_json()
 
 
-@app.route("/books/recommend/<token>", methods=['GET'])
+@app.route("/books/recommended/<token>", methods=['GET'])
 def get_user_recommend_books(token):
     try:
         user_id = User.decode_auth_token(token)

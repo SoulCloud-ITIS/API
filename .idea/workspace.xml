@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="896ebeaf-0fef-4e12-a96a-afad2b4b3588" name="Default" comment="get recommend user books">
+    <list default="true" id="896ebeaf-0fef-4e12-a96a-afad2b4b3588" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/app/routes/book_routes.py" afterPath="$PROJECT_DIR$/app/routes/book_routes.py" />
     </list>
@@ -85,8 +85,8 @@
       <file leaf-file-name="book_routes.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="177" column="30" lean-forward="false" selection-start-line="177" selection-start-column="30" selection-end-line="177" selection-end-column="30" />
+            <state relative-caret-position="284">
+              <caret line="129" column="30" lean-forward="false" selection-start-line="129" selection-start-column="30" selection-end-line="129" selection-end-column="30" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -491,7 +491,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521391405667</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="get recommend user books">
+      <created>1521612671788</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1521612671788</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -552,7 +559,8 @@
     <MESSAGE value="update books table" />
     <MESSAGE value="update add user genre" />
     <MESSAGE value="get recommend user genre books" />
-    <option name="LAST_COMMIT_MESSAGE" value="get recommend user genre books" />
+    <MESSAGE value="get recommend user books" />
+    <option name="LAST_COMMIT_MESSAGE" value="get recommend user books" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -933,8 +941,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="177" column="30" lean-forward="false" selection-start-line="177" selection-start-column="30" selection-end-line="177" selection-end-column="30" />
+        <state relative-caret-position="284">
+          <caret line="129" column="30" lean-forward="false" selection-start-line="129" selection-start-column="30" selection-end-line="129" selection-end-column="30" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
