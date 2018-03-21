@@ -70,7 +70,7 @@ def add_user_book(book_id, token):
     try:
         user_id = User.decode_auth_token(token)
 
-        users_and_books = UsersAndBooks(user_id, book_id)
+        users_and_books = UsersAndBooks(user_id, book_id, None)
         db.session.add(users_and_books)
         db.session.commit()
         return Response.success_json()
