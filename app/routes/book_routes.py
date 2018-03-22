@@ -219,6 +219,27 @@ def search_books(keyword, page=1):
     return Book.schema.jsonify(books, True)
 
 
+@app.route("/books/<int:book_id>/check/<token>")
+def check_book_for_user(token, book_id):
+    try:
+        user_id = User.decode_auth_token(token)
+        user_and_book = UsersAndBooks\
+            .query\
+            .filter(UsersAndBooks.book_id == book_id, UsersAndBooks.user_id == user_id)\
+            .first()
+        if user_and_book is not None:
+            data = {'result': True, 'bookID': book_id}
+        else:
+            data = {'result': False, 'bookID': book_id}
+        return jsonify(data)
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
 def get_recommend_books(mark, user_id, user_books_id):
     difference = 0.2
     average_pos = 1
