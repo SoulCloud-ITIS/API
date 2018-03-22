@@ -176,7 +176,7 @@ def get_genre_recommend_books(token, page=1):
 
         coefficients = Coefficient \
             .query \
-            .filter(Coefficient.genre_id.in_(genres_id), Coefficient.value > 0.75) \
+            .filter(Coefficient.genre_id.in_(genres_id), Coefficient.value > 0.25) \
             .distinct(Coefficient.book_id).paginate(page, BOOKS_PER_PAGE, False).items
         books = [coefficient.book for coefficient in coefficients]
 
