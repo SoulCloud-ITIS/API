@@ -164,7 +164,6 @@ def get_like_status_book(book_id, token):
         return Response.invalid_token_json()
 
 
-@app.route("/books/genres/<coefficient>/recommend/<int:page>/<token>", methods=['GET'])
 @app.route("/books/genres/recommend/<int:page>/<token>", methods=['GET'])
 @app.route("/books/genres/recommend/<token>", methods=['GET'])
 def get_genre_recommend_books(token, page=1, coefficient=0.25):
@@ -220,7 +219,7 @@ def search_books(keyword, page=1):
     return Book.schema.jsonify(books, True)
 
 
-@app.route("/books/<int:book_id>/check/<token>")
+@app.route("/books/<int:book_id>/check/<token>", methods=['GET'])
 def check_book_for_user(token, book_id):
     try:
         user_id = User.decode_auth_token(token)
@@ -233,6 +232,21 @@ def check_book_for_user(token, book_id):
         else:
             data = {'result': False, 'bookID': book_id}
         return jsonify(data)
+    except SQLAlchemyError as e:
+        return Response.error_json(e)
+    except ExpiredSignatureError:
+        return Response.expired_token_json()
+    except InvalidTokenError:
+        return Response.invalid_token_json()
+
+
+@app.route("/books/<int:book_id>/<token>", methods=['DELETE'])
+def delete_user_book(token, book_id):
+    try:
+        user_id = User.decode_auth_token(token)
+        UsersAndBooks.query.filter(UsersAndBooks.user_id == user_id, UsersAndBooks.book_id == book_id).delete()
+        db.session.commit()
+        return Response.success_json()
     except SQLAlchemyError as e:
         return Response.error_json(e)
     except ExpiredSignatureError:
