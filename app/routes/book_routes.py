@@ -244,9 +244,16 @@ def check_book_for_user(token, book_id):
 def delete_user_book(token, book_id):
     try:
         user_id = User.decode_auth_token(token)
-        UsersAndBooks.query.filter(UsersAndBooks.user_id == user_id, UsersAndBooks.book_id == book_id).delete()
-        db.session.commit()
-        return Response.success_json()
+        user_and_book = UsersAndBooks\
+            .query\
+            .filter(UsersAndBooks.user_id == user_id, UsersAndBooks.book_id == book_id)\
+            .first()
+        if user_and_book is not None:
+            UsersAndBooks.query.filter(UsersAndBooks.user_id == user_id, UsersAndBooks.book_id == book_id).delete()
+            db.session.commit()
+            return Response.success_json()
+        else:
+            return Response("Book not found", False, ErrorCodes.bookNotFound).to_json()
     except SQLAlchemyError as e:
         return Response.error_json(e)
     except ExpiredSignatureError:
