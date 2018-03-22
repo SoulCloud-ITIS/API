@@ -164,9 +164,10 @@ def get_like_status_book(book_id, token):
         return Response.invalid_token_json()
 
 
+@app.route("/books/genres/<coefficient>/recommend/<int:page>/<token>", methods=['GET'])
 @app.route("/books/genres/recommend/<int:page>/<token>", methods=['GET'])
 @app.route("/books/genres/recommend/<token>", methods=['GET'])
-def get_genre_recommend_books(token, page=1):
+def get_genre_recommend_books(token, page=1, coefficient=0.25):
     try:
         user_id = User.decode_auth_token(token)
         user = User.query.get(user_id)
@@ -176,7 +177,7 @@ def get_genre_recommend_books(token, page=1):
 
         coefficients = Coefficient \
             .query \
-            .filter(Coefficient.genre_id.in_(genres_id), Coefficient.value > 0.25) \
+            .filter(Coefficient.genre_id.in_(genres_id), Coefficient.value > coefficient) \
             .distinct(Coefficient.book_id).paginate(page, BOOKS_PER_PAGE, False).items
         books = [coefficient.book for coefficient in coefficients]
 

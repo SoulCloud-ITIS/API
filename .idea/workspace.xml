@@ -87,8 +87,8 @@
       <file leaf-file-name="book_routes.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="178" column="81" lean-forward="false" selection-start-line="178" selection-start-column="81" selection-end-line="178" selection-end-column="81" />
+            <state relative-caret-position="386">
+              <caret line="179" column="88" lean-forward="false" selection-start-line="179" selection-start-column="88" selection-end-line="179" selection-end-column="88" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -570,7 +570,14 @@
       <option name="project" value="LOCAL" />
       <updated>1521753675443</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Set new value to genres">
+      <created>1521756141309</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1521756141309</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TodoView">
@@ -616,7 +623,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add book to database" />
     <MESSAGE value="Add user book" />
     <MESSAGE value="Get user books with mark" />
     <MESSAGE value="Updated requirements" />
@@ -641,7 +647,8 @@
     <MESSAGE value="405 error handler" />
     <MESSAGE value="search book" />
     <MESSAGE value="Check user book" />
-    <option name="LAST_COMMIT_MESSAGE" value="Check user book" />
+    <MESSAGE value="Set new value to genres" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set new value to genres" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -980,13 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/3cf59559/a68ac714-abd9-4a3e-bf9c-d3e972f07df0/ddduintd5jnpep.public.books">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://table:/3cf59559/a68ac714-abd9-4a3e-bf9c-d3e972f07df0/ddduintd5jnpep.public.genres">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1016,6 +1016,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="das://table:/3cf59559/a68ac714-abd9-4a3e-bf9c-d3e972f07df0/ddduintd5jnpep.public.books">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
     <entry file="das://table:/3cf59559/a68ac714-abd9-4a3e-bf9c-d3e972f07df0/ddduintd5jnpep.public.coefficients">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1025,8 +1032,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/routes/book_routes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="178" column="81" lean-forward="false" selection-start-line="178" selection-start-column="81" selection-end-line="178" selection-end-column="81" />
+        <state relative-caret-position="386">
+          <caret line="179" column="88" lean-forward="false" selection-start-line="179" selection-start-column="88" selection-end-line="179" selection-end-column="88" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
